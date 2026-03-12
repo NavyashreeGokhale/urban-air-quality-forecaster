@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from mlcore.model_loader import predict_aqi
+from django.shortcuts import render
+
 
 
 @csrf_exempt
@@ -28,3 +30,7 @@ def predict(request):
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+        
+
+def test_page(request):
+    return render(request, "test.html")

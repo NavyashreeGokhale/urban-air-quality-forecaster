@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AQI Predictor</title>
+</head>
+<body>
+
+<h2>AQI Prediction Test</h2>
+
+<input id="features" placeholder="Enter features comma separated">
+<button onclick="predict()">Predict</button>
+
+<p id="result"></p>
+
+<script>
+function predict() {
+
+    let values = document.getElementById("features").value
+        .split(",")
+        .map(Number);
+
+    fetch("/api/predict/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            features: values
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("result").innerText =
+            "Predicted AQI: " + data.predicted_aqi;
+    });
+
+}
+</script>
+
+</body>
+</html>
